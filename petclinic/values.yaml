@@ -1,0 +1,33 @@
+replicaCount: 2
+
+image:
+  repository: kahanhm/spring-petclinic
+  tag: "1.0.0"
+
+service:
+  type: LoadBalancer
+  port: 80
+  targetPort: 9966
+
+spring:
+  profile: "mysql,spring-data-jpa"
+  datasource:
+    url: "jdbc:mysql://mysql:3306/petclinicdb"
+    username: "appuser"
+    password: "apppass"
+    initMode: "always"
+
+mysql:
+  name: mysql
+  image: mysql:8.4
+  port: 3306
+  database: petclinicdb
+  username: appuser
+  password: apppass
+  rootPassword: root
+  mountPath: /var/lib/mysql
+  persistence:
+    enabled: true
+    accessMode: ReadWriteOnce
+    storage: 5Gi
+
